@@ -84,7 +84,7 @@ void loop()
 
     // Enable the interrupt again now that we've finished sending output
     attachInterrupt(sensorPin2, pulseCounter2, FALLING);
-    serializeJsonPretty(doc, Serial);
+    serializeJson(doc, Serial);
   }
   Serial.println("");
   delay(5000);
