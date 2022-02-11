@@ -1,21 +1,26 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
 {
     "configurations": [
         {
             "name": "PlatformIO",
             "includePath": [
-                "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/include",
-                "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/src",
-                "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/EspMQTTClient/src",
+                "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/include",
+                "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/src",
+                "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/MQTT/src",
+                "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/ArduinoJson/src",
+                "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/EspMQTTClient/src",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/ArduinoOTA/src",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/ESPmDNS/src",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
-                "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/PubSubClient/src",
-                "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/MQTT/src",
-                "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/ArduinoJson/src",
-                "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/ArduinoJson-esphomelib/src",
+                "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/PubSubClient/src",
+                "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/ArduinoJson-esphomelib/src",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/config",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/app_trace",
                 "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/app_update",
@@ -115,19 +120,19 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/include",
-                    "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/src",
-                    "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/EspMQTTClient/src",
+                    "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/include",
+                    "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/src",
+                    "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/MQTT/src",
+                    "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/ArduinoJson/src",
+                    "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/EspMQTTClient/src",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/ArduinoOTA/src",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/ESPmDNS/src",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/FS/src",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
-                    "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/PubSubClient/src",
-                    "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/MQTT/src",
-                    "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/ArduinoJson/src",
-                    "/Users/robknighton/Developer/PlatformIO/Projects/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/ArduinoJson-esphomelib/src",
+                    "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/PubSubClient/src",
+                    "/Users/robknighton/Documents/GitHub/brewblox-FlowMeter/.pio/libdeps/esp32doit-espduino/ArduinoJson-esphomelib/src",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/config",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/app_trace",
                     "/Users/robknighton/.platformio/packages/framework-arduinoespressif32/tools/sdk/include/app_update",

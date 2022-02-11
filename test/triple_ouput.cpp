@@ -64,7 +64,7 @@ void setup()
 
 void loop()
 {
-  StaticJsonDocument<200> doc;
+  StaticJsonDocument<100> doc;
   if ((millis() - oldTime1) > 1000) // Only process counters once per second
   {
     ///////////////////////////////////////////////////////////////////////////

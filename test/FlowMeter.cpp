@@ -1,22 +1,20 @@
 // Needs work
 
-
-
 #include "Arduino.h"
 
-class FlowMeter {
-    public:
-        int sensorPin, sensorInterrupt; 
-        volatile int pulseCount;
-        float calibrationFactor, flowRate;
-        unsigned int flowMilliLiters;
-        unsigned long totalMilliLiters, totalpulseCount, oldTime;
+class FlowMeter
+{
+public:
+    int sensorPin, sensorInterrupt;
+    volatile int pulseCount;
+    float calibrationFactor, flowRate;
+    unsigned int flowMilliLiters;
+    unsigned long totalMilliLiters, totalpulseCount, oldTime;
 
-        void pulseCounter() { pulseCount++; };
-        void setSensorPin(int pin) { sensorPin = pin; }
-        void setCalibrationFactor(float cal) { calibrationFactor = cal; }
-        float getFlowRate() {((1000.0 / (millis() - oldTime)) * pulseCount) / calibrationFactor;}
-
+    void pulseCounter() { pulseCount++; };
+    void setSensorPin(int pin) { sensorPin = pin; }
+    void setCalibrationFactor(float cal) { calibrationFactor = cal; }
+    float getFlowRate() { ((1000.0 / (millis() - oldTime)) * pulseCount) / calibrationFactor; }
 };
 
 FlowMeter f1;
@@ -25,7 +23,7 @@ void setup()
 {
     // Initialize a serial connection for reporting values to the host
     Serial.begin(115200);
-    f1.setSensorPin(26);    
+    f1.setSensorPin(26);
     pinMode(f1.sensorPin, INPUT_PULLUP);
     digitalWrite(f1.sensorPin, HIGH);
 
@@ -59,7 +57,7 @@ void loop()
         // that to scale the output. We also apply the calibrationFactor to scale the output
         // based on the number of pulses per second per units of measure (litres/minute in
         // this case) coming from the sensor.
-        //flowRate = ((1000.0 / (millis() - oldTime)) * fpulseCount) / f1.calibrationFactor;
+        // flowRate = ((1000.0 / (millis() - oldTime)) * fpulseCount) / f1.calibrationFactor;
         f1.getFlowRate();
         // Note the time this processing pass was executed. Note that because we've
         // disabled interrupts the millis() function won't actually be incrementing right
