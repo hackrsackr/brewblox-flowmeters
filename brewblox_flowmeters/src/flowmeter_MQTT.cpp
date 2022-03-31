@@ -15,12 +15,12 @@ void pulseCounter2() { f2.pulse_count++; }
 
 void onConnectionEstablished(void);
 
-
 void setup()
 {
     // Initialize a serial connection for reporting values to the host
     Serial.begin(115200);
     
+    // WiFi
     WiFi.begin(_SSID, _PASS);
     Serial.println("");
 
@@ -38,15 +38,14 @@ void setup()
     
     client.enableHTTPWebUpdater();
     client.enableOTA();
-    //client.setMaxPacketSize(4096);
-    client.enableDebuggingMessages();
+    //client.enableDebuggingMessages();
 
     f1.sensor_pin = _SPIN1;
-    f1.name = _FLOW1;
+    f1.name       = _FLOW1;
     f1.cal_factor = _YF_S302;
 
     f2.sensor_pin = _SPIN2;
-    f2.name = _FLOW2;
+    f2.name       = _FLOW2;
     f2.cal_factor = _YF_S302;
 
     pinMode(f1.sensor_pin, INPUT_PULLUP);
@@ -54,9 +53,6 @@ void setup()
     digitalWrite(f1.sensor_pin, HIGH);
     digitalWrite(f2.sensor_pin, HIGH);
 
-    // The Hall-effect sensor is connected to pin 2 which uses interrupt 0.
-    // Configured to trigger on a FALLING state change (transition from HIGH
-    // state to LOW state)
     attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
     attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
 }
@@ -65,11 +61,11 @@ void loop()
 {
     client.loop();
 
-    f1.run();
-    data[0] = f1.data;
+    f1.flowmeter_run();
+    data[0] = f1.flow_data;
 
-    f2.run();
-    data[1] = f2.data;
+    f2.flowmeter_run();
+    data[1] = f2.flow_data;
 
     attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
     attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
@@ -79,9 +75,8 @@ void loop()
 
     message["key"] = _CLIENTID;
     message["data"] = data;
-    // Serial.println(message);
-    onConnectionEstablished();
-
+    
+    Serial.println(message);
     client.publish(_PUBTOPIC, JSON.stringify(message));
 
     delay(5000);

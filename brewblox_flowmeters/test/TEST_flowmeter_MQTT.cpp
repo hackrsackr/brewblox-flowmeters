@@ -4,7 +4,7 @@
 #include <Esp32HTTPUpdateServer.h>
 
 #include "flowmeter.hpp"
-#include "config.hpp"
+#include "config.h"
 
 FlowMeter f1, f2;
 JSONVar data, message;
@@ -12,8 +12,8 @@ EspMQTTClient client(_SSID, _PASS, _MQTTHOST, _CLIENTID, _MQTTPORT);
 
 void pulseCounter1() { f1.pulse_count++; }
 void pulseCounter2() { f2.pulse_count++; }
-void onConnectionEstablished(void);
 
+void onConnectionEstablished(void);
 
 
 void setup()
@@ -37,16 +37,17 @@ void setup()
     Serial.println(WiFi.localIP());
     
     client.enableHTTPWebUpdater();
+    client.enableOTA();
     //client.setMaxPacketSize(4096);
-    //client.enableDebuggingMessages();
+    client.enableDebuggingMessages();
 
     f1.sensor_pin = _SPIN1;
     f1.name = _FLOW1;
-    f1.cal_factor = _YFS402B;
+    f1.cal_factor = _YF_S302;
 
     f2.sensor_pin = _SPIN2;
     f2.name = _FLOW2;
-    f2.cal_factor = _YFS402B;
+    f2.cal_factor = _YF_S302;
 
     pinMode(f1.sensor_pin, INPUT_PULLUP);
     pinMode(f2.sensor_pin, INPUT_PULLUP);
@@ -69,30 +70,19 @@ void loop()
 
     f2.run();
     data[1] = f2.data;
-    
-    //Serial.println(JSON.stringify(data));
-    
+
     attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
     attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
-
-    //client.publish(_PUBTOPIC, JSON.stringify(data));
-
-    //message["key"] = _CLIENTID;
-    //message["data"] = data;
-    // Serial.println(message);
-
+    
+    message["key"] = _CLIENTID;
+    message["data"] = data;
+    
+    //onConnectionEstablished();
     //client.publish(_PUBTOPIC, JSON.stringify(message));
-
     delay(5000);
 }
 
 void onConnectionEstablished()
 {
-    data[0] = f1.data;
-    data[1] = f2.data;
-
-    message["key"] = _CLIENTID;
-    message["data"] = data;
-
-    client.publish(_PUBTOPIC, JSON.stringify(data));
+    client.publish(_PUBTOPIC, JSON.stringify(message));
 }
