@@ -59,8 +59,9 @@ void FlowMeter::flowmeter_run()
     flow_mLs = (flow_rate / 60) * 1000;
     total_mLs += flow_mLs;
 
-    flow_data[name]["Flow Rate[LPM]"] = flow_rate;
-    flow_data[name]["Total[mls]"] = total_mLs;
+
+    flow_data["Flow Rate[LPM]"] = flow_rate;
+    flow_data["Total[mls]"] = total_mLs;
     //JSON.stringify(flow_data);
 
     // Reset the pulse counter so we can start incrementing again
