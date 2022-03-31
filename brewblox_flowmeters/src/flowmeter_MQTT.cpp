@@ -1,14 +1,15 @@
-#include <Arduino.h>
-#include <Arduino_JSON.h>
-#include <EspMQTTClient.h>
-#include <Esp32HTTPUpdateServer.h>
+#include "Arduino_JSON.h"
+#include "EspMQTTClient.h"
+#include "Esp32HTTPUpdateServer.h"
 
 #include "flowmeter.h"
-#include "config.h"
+#include "flow_config.h"
 
-FlowMeter f1, f2;
-JSONVar data, message;
 EspMQTTClient client(_SSID, _PASS, _MQTTHOST, _CLIENTID, _MQTTPORT);
+
+FlowMeter f1, f2; 
+
+JSONVar message;
 
 void pulseCounter1() { f1.pulse_count++; }
 void pulseCounter2() { f2.pulse_count++; }
@@ -36,8 +37,8 @@ void setup()
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
     
+    // espMQTT client setup 
     client.enableHTTPWebUpdater();
-    client.enableOTA();
     //client.enableDebuggingMessages();
     
     // Setup each flowmeter
@@ -58,25 +59,23 @@ void setup()
 
 void loop()
 {
+    JSONVar data;
+
     client.loop();
 
     f1.flowmeter_run();
     data[0] = f1.flow_data;
+    attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
 
     f2.flowmeter_run();
     data[1] = f2.flow_data;
-
-    attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
     attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
     
-    //Serial.println(JSON.stringify(data));
-    //client.publish(_PUBTOPIC, JSON.stringify(data));
-
     message["key"] = _CLIENTID;
     message["data"] = data;
     
     Serial.println(message);
-    client.publish(_PUBTOPIC, JSON.stringify(message));
+    Serial.println("");
 
     delay(5000);
 }

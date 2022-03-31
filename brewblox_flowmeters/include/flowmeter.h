@@ -1,4 +1,4 @@
-#include <Arduino_JSON.h>
+#include "Arduino_JSON.h"
 
 class FlowMeter
 {
@@ -21,8 +21,11 @@ public:
   void flowmeter_run();
 };
 
+
 void FlowMeter::pulseCounter() { pulse_count++; };
+
 void FlowMeter::setSensorPin(int pin) { sensor_pin = pin; }
+
 void FlowMeter::setCalibrationFactor(float cal) { cal_factor = cal; }
 
 float FlowMeter::getFlowRate()
