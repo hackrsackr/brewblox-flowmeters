@@ -39,21 +39,20 @@ void setup()
     client.enableHTTPWebUpdater();
     client.enableOTA();
     //client.enableDebuggingMessages();
-
+    
+    // Setup each flowmeter
     f1.sensor_pin = _SPIN1;
     f1.name       = _FLOW1;
     f1.cal_factor = _YF_S302;
+    pinMode(f1.sensor_pin, INPUT_PULLUP);
+    digitalWrite(f1.sensor_pin, HIGH);
+    attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
 
     f2.sensor_pin = _SPIN2;
     f2.name       = _FLOW2;
     f2.cal_factor = _YF_S302;
-
-    pinMode(f1.sensor_pin, INPUT_PULLUP);
     pinMode(f2.sensor_pin, INPUT_PULLUP);
-    digitalWrite(f1.sensor_pin, HIGH);
     digitalWrite(f2.sensor_pin, HIGH);
-
-    attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
     attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
 }
 
