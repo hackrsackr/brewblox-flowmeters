@@ -3,8 +3,8 @@
 #include <EspMQTTClient.h>
 #include <Esp32HTTPUpdateServer.h>
 
-#include "flowmeter.h"
-#include "config.h"
+#include "flowmeter.hpp"
+#include "config.hpp"
 
 FlowMeter f1, f2;
 JSONVar data, message;

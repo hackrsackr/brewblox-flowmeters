@@ -84,7 +84,7 @@ void loop()
     // Serial.println(message);
     onConnectionEstablished();
 
-    client.publish(_PUBTOPIC, JSON.stringify(message));
+    //client.publish(_PUBTOPIC, JSON.stringify(message));
 
     delay(5000);
 }
