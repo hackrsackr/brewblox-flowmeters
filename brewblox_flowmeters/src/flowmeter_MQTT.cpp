@@ -38,6 +38,7 @@ void setup()
     Serial.println(WiFi.localIP());
     
     // espMQTT client setup 
+    client.enableOTA();
     client.enableHTTPWebUpdater();
     //client.enableDebuggingMessages();
     
