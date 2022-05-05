@@ -22,5 +22,5 @@
 
 // Calibration Factors
 #define _YF_S302 21.85 // [23*Q-3] f = 23*60-(23*3) = 1311 bits per liter 1311/60 = 21.85
-#define _YFS402B 32.00 // f = Q*32 32*60 = 1920 bits per liter
+#define _YFS402B 32.01 // f = Q*32 32*60 = 1920 bits per liter
 #define _SS_FLOW 9.93  // 596 bits per liter 596/60 = 9.93  

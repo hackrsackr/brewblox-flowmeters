@@ -7,7 +7,8 @@
 
 EspMQTTClient client(_SSID, _PASS, _MQTTHOST, _CLIENTID, _MQTTPORT);
 
-FlowMeter f1, f2; 
+FlowMeter f1(_SPIN1, _FLOW1, _YFS402B); 
+FlowMeter f2(_SPIN2, _FLOW2, _YFS402B); 
 
 void pulseCounter1() { f1.pulse_count++; }
 void pulseCounter2() { f2.pulse_count++; }
@@ -21,7 +22,7 @@ void setup()
     Serial.begin(115200);
     
     client.enableHTTPWebUpdater();
-    client.setMaxPacketSize(4096);
+    client.setMaxPacketSize(1000);
     client.enableOTA();
     // client.enableDebuggingMessages();
     
@@ -41,21 +42,16 @@ void setup()
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
     
-    // Setup each flowmeter
-    f1.sensor_pin = _SPIN1;
-    f1.name       = _FLOW1;
-    f1.cal_factor = _YF_S302;
     pinMode(f1.sensor_pin, INPUT_PULLUP);
-    digitalWrite(f1.sensor_pin, HIGH);
-    attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
-
-    f2.sensor_pin = _SPIN2;
-    f2.name       = _FLOW2;
-    f2.cal_factor = _YF_S302;
     pinMode(f2.sensor_pin, INPUT_PULLUP);
+
+    digitalWrite(f1.sensor_pin, HIGH);
     digitalWrite(f2.sensor_pin, HIGH);
+    
+    attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
     attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
 }
+
 
 void publish_data()
 {

@@ -4,31 +4,50 @@ class FlowMeter
 {
 public:
   int sensor_pin;
+  
   unsigned int flow_mLs;
   volatile int pulse_count;
+  
   float flow_rate;
   float cal_factor;
+  
   unsigned long total_mLs;
   unsigned long total_pulseCount;
   unsigned long old_time;
+  
   String name;
   JSONVar flow_data;
 
-  void pulseCounter();
-  void setSensorPin(int);
-  void setCalibrationFactor(float);
-  float getFlowRate();
+  FlowMeter();
+  FlowMeter(int, String, float);
+  ~FlowMeter();
+
+  void set_sensor_pin(int);
+  void set_calibration_factor(float);
+  void reset_total();
+  float get_flowrate();
   void flowmeter_run();
 };
 
+FlowMeter::FlowMeter(int sp, String nm, float cf)
+{
+  sensor_pin = sp;
+  name = nm;
+  cal_factor = cf;
+}
 
-void FlowMeter::pulseCounter() { pulse_count++; };
+FlowMeter::~FlowMeter()
+{
+  Serial.println("destructor invoked");
+}
 
-void FlowMeter::setSensorPin(int pin) { sensor_pin = pin; }
+void FlowMeter::reset_total() { total_mLs = 0; };
 
-void FlowMeter::setCalibrationFactor(float cal) { cal_factor = cal; }
+void FlowMeter::set_sensor_pin(int pin) { sensor_pin = pin; }
 
-float FlowMeter::getFlowRate()
+void FlowMeter::set_calibration_factor(float cal) { cal_factor = cal; }
+
+float FlowMeter::get_flowrate()
 {
   flow_rate = 1000.0 / (millis() - old_time) * pulse_count / cal_factor;
 
@@ -47,7 +66,7 @@ void FlowMeter::flowmeter_run()
     // that to scale the output. We also apply the calibrationFactor to scale the output
     // based on the number of pulses per second per units of measure (litres/minute in
     // this case) coming from the sensor.
-    getFlowRate();
+    get_flowrate();
     //  Note the time this processing pass was executed. Note that because we've
     //  disabled interrupts the millis() function won't actually be incrementing right
     //  at this point, but it will still return the value it was set to just before
@@ -68,7 +87,4 @@ void FlowMeter::flowmeter_run()
     pulse_count = 0;
 
   }
-  // Enable the interrupt again now that we've finished sending output
-  // attachInterrupt(sensor_pin, pulseCounter, FALLING);
-  // MUST DO THIS WHERE pulseCounter is
 }
