@@ -1,25 +1,29 @@
 #include "Arduino_JSON.h"
 #include "EspMQTTClient.h"
-#include "Esp32HTTPUpdateServer.h"
+#include "ESP32HTTPUpdateServer.h"
 
-#include "flowmeter.h"
-#include "flow_config.h"
+#include "flowmeter.hpp"
+#include "flow_config.hpp"
 
 EspMQTTClient client(_SSID, _PASS, _MQTTHOST, _CLIENTID, _MQTTPORT);
 
 FlowMeter f1, f2; 
 
-JSONVar message;
-
 void pulseCounter1() { f1.pulse_count++; }
 void pulseCounter2() { f2.pulse_count++; }
 
 void onConnectionEstablished(void);
+void publishData(void);
 
 void setup()
 {
     // Initialize a serial connection for reporting values to the host
     Serial.begin(115200);
+    
+    client.enableHTTPWebUpdater();
+    client.setMaxPacketSize(4096);
+    client.enableOTA();
+    // client.enableDebuggingMessages();
     
     // WiFi
     WiFi.begin(_SSID, _PASS);
@@ -37,11 +41,6 @@ void setup()
     Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
     
-    // espMQTT client setup 
-    client.enableOTA();
-    client.enableHTTPWebUpdater();
-    //client.enableDebuggingMessages();
-    
     // Setup each flowmeter
     f1.sensor_pin = _SPIN1;
     f1.name       = _FLOW1;
@@ -58,30 +57,40 @@ void setup()
     attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
 }
 
-void loop()
+void publish_data()
 {
-    JSONVar data;
+    if (client.isConnected())
+    {
+        JSONVar data;
+        JSONVar message;
 
-    client.loop();
+        f1.flowmeter_run();
+        data[0] = f1.flow_data;
+        attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
 
-    f1.flowmeter_run();
-    data[0] = f1.flow_data;
-    attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
+        f2.flowmeter_run();
+        data[1] = f2.flow_data;
+        attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
+        
+        message["key"] = _CLIENTID;
+        message["data"] = data;
 
-    f2.flowmeter_run();
-    data[1] = f2.flow_data;
-    attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
-    
-    message["key"] = _CLIENTID;
-    message["data"] = data;
-    
-    Serial.println(message);
-    Serial.println("");
+        client.publish(_PUBTOPIC, JSON.stringify(message));
 
-    delay(5000);
+        Serial.println(message);
+        Serial.println("");
+
+        delay(5000);
+    }
 }
 
 void onConnectionEstablished()
 {
-    client.publish(_PUBTOPIC, JSON.stringify(message));
+    publish_data();    
+}
+
+void loop()
+{
+    client.loop();
+    publish_data();
 }
