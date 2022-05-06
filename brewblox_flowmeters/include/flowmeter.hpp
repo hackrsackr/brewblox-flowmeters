@@ -3,9 +3,9 @@
 class FlowMeter
 {
 public:
-  int sensor_pin;
+  uint8_t sensor_pin;
   
-  unsigned int flow_mLs;
+  uint16_t flow_mLs;
   volatile int pulse_count;
   
   float flow_rate;

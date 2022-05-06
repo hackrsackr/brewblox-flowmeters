@@ -24,19 +24,24 @@ void setup()
     // client.enableDebuggingMessages();
     
     // WiFi
+    WiFi.disconnect(true);
+    delay(1000);
     WiFi.begin(_SSID, _PASS);
-    Serial.println("");
-
+    
+    uint8_t failed_connections = 0;
     while (WiFi.status() != WL_CONNECTED)
     {
         delay(500);
-        Serial.print(".");
+        Serial.println("connecting..");
+        failed_connections ++;
+        if (failed_connections > 150) 
+        {
+            Serial.println("restarting..");
+            ESP.restart();
+        }
     }
-
-    Serial.println("");
+    
     Serial.print("Connected to ");
-    Serial.println(_SSID);
-    Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
 
     // FlowMeter setup

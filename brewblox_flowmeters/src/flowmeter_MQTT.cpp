@@ -22,7 +22,7 @@ void setup()
     Serial.begin(115200);
     
     client.enableHTTPWebUpdater();
-    client.setMaxPacketSize(1000);
+    client.setMaxPacketSize(4000);
     client.enableOTA();
     // client.enableDebuggingMessages();
     
