@@ -66,11 +66,11 @@ void publish_data()
         JSONVar message;
 
         f1.flowmeter_run();
-        data[0] = f1.flow_data;
+        data["f1"] = f1.flow_data;
         attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
 
         f2.flowmeter_run();
-        data[1] = f2.flow_data;
+        data["f2"] = f2.flow_data;
         attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
         
         message["key"] = _CLIENTID;

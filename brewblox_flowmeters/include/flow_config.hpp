@@ -5,7 +5,7 @@
 #define _PASS SECRET_PASS
 #define _MQTTHOST "192.168.1.2"
 #define _MQTTPORT 1883
-#define _CLIENTID "flow-meters-test"
+#define _CLIENTID "flow-meters"
 //#define _SUBTOPIC "brewcast/history/spark-two"
 #define _PUBTOPIC "brewcast/history/flow-meters"
 

@@ -62,10 +62,10 @@ void publish_data()
         JSONVar message;
 
         f1.flowmeter_run();
-        data[0] = f1.flow_data;
+        data["f1"] = f1.flow_data;
         attachInterrupt(f1.sensor_pin, pulseCounter, FALLING);
         
-        message["key"] = _CLIENTID;
+        message["key"] = "flow-meters";
         message["data"] = data;
 
         client.publish(_PUBTOPIC, JSON.stringify(message));
