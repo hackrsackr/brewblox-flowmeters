@@ -49,7 +49,7 @@ void FlowMeter::set_calibration_factor(float cal) { cal_factor = cal; }
 
 float FlowMeter::get_flowrate()
 {
-  flow_rate = 1000.0 / (millis() - old_time) * pulse_count / cal_factor;
+  flow_rate = std::round 1000.0 / (millis() - old_time) * pulse_count / cal_factor;
 
   return flow_rate;
 }
