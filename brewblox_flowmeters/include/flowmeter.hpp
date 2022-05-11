@@ -5,9 +5,9 @@ class FlowMeter
 public:
   uint8_t sensor_pin;
   
-  uint16_t flow_mLs;
   volatile int pulse_count;
   
+  float flow_mLs;
   float flow_rate;
   float cal_factor;
   
@@ -22,7 +22,7 @@ public:
   FlowMeter(int, String, float);
   ~FlowMeter();
 
-  void set_sensor_pin(int);
+  void set_sensor_pin(uint8_t);
   void set_calibration_factor(float);
   void reset_total();
   float get_flowrate();
@@ -41,15 +41,15 @@ FlowMeter::~FlowMeter()
   Serial.println("destructor invoked");
 }
 
-void FlowMeter::reset_total() { total_mLs = 0; };
+void FlowMeter::reset_total() { total_mLs = 0; }
 
-void FlowMeter::set_sensor_pin(int pin) { sensor_pin = pin; }
+void FlowMeter::set_sensor_pin(uint8_t pin) { sensor_pin = pin; }
 
 void FlowMeter::set_calibration_factor(float cal) { cal_factor = cal; }
 
 float FlowMeter::get_flowrate()
 {
-  flow_rate = std::round 1000.0 / (millis() - old_time) * pulse_count / cal_factor;
+  flow_rate = 1000.0 / (millis() - old_time) * pulse_count / cal_factor;
 
   return flow_rate;
 }
@@ -67,6 +67,7 @@ void FlowMeter::flowmeter_run()
     // based on the number of pulses per second per units of measure (litres/minute in
     // this case) coming from the sensor.
     get_flowrate();
+
     //  Note the time this processing pass was executed. Note that because we've
     //  disabled interrupts the millis() function won't actually be incrementing right
     //  at this point, but it will still return the value it was set to just before
@@ -75,7 +76,7 @@ void FlowMeter::flowmeter_run()
     // Divide the flow rate in litres/minute by 60 to determine how many litres have
     // passed through the sensor in this 1 second interval, then multiply by 1000 to
     // convert to millilitres.
-    flow_mLs = (flow_rate / 60) * 1000;
+    flow_mLs = (flow_rate / 60.0) * 1000.0;
     total_mLs += flow_mLs;
 
 

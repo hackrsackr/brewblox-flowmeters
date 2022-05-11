@@ -7,6 +7,8 @@
 #define _MQTTPORT 1883
 #define _CLIENTID "flow-meters"
 //#define _SUBTOPIC "brewcast/history/spark-two"
+//#define _HISTORY_TOPIC "brewcast/state/flow-meters"
+//#define _STATE_TOPIC "brewcast/state/flow-meters"
 #define _PUBTOPIC "brewcast/history/flow-meters"
 
 // Flowmeter setup
