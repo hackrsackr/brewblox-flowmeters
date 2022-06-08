@@ -1,7 +1,6 @@
 import subprocess
 
-clean_command = 'pio run -t upload'
-pio_clean = subprocess.run(clean_command, shell=True)
+pio_clean = subprocess.run('pio run -t clean', shell=True)
 
 
 if __name__ == '__main__':
