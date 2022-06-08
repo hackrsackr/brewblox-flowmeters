@@ -1,5 +1,3 @@
-#include "Arduino_JSON.h"
-
 class FlowMeter
 {
 public:
@@ -16,11 +14,9 @@ public:
   unsigned long old_time;
   
   String name;
-  JSONVar flow_data;
 
   FlowMeter();
   FlowMeter(int, String, float);
-  ~FlowMeter();
 
   void set_sensor_pin(uint8_t);
   void set_calibration_factor(float);
@@ -34,11 +30,6 @@ FlowMeter::FlowMeter(int sp, String nm, float cf)
   sensor_pin = sp;
   name = nm;
   cal_factor = cf;
-}
-
-FlowMeter::~FlowMeter()
-{
-  Serial.println("destructor invoked");
 }
 
 void FlowMeter::reset_total() { total_mLs = 0; }
@@ -67,7 +58,6 @@ void FlowMeter::flowmeter_run()
     // based on the number of pulses per second per units of measure (litres/minute in
     // this case) coming from the sensor.
     get_flowrate();
-
     //  Note the time this processing pass was executed. Note that because we've
     //  disabled interrupts the millis() function won't actually be incrementing right
     //  at this point, but it will still return the value it was set to just before
@@ -78,12 +68,6 @@ void FlowMeter::flowmeter_run()
     // convert to millilitres.
     flow_mLs = (flow_rate / 60.0) * 1000.0;
     total_mLs += flow_mLs;
-
-
-    flow_data["Flow Rate[LPM]"] = flow_rate;
-    flow_data["Total[mls]"] = total_mLs;
-    //JSON.stringify(flow_data);
-
     // Reset the pulse counter so we can start incrementing again
     pulse_count = 0;
 

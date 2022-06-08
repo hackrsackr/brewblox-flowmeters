@@ -13,9 +13,9 @@
 
 // Flowmeter setup
 // Names
-#define _FLOW1 "flow-meter 1"
-#define _FLOW2 "flow-meter 2"
-#define _FLOW3 "flow-meter 3"
+#define _FLOW1 "flow-meter-1"
+#define _FLOW2 "flow-meter-2"
+#define _FLOW3 "flow-meter-3"
 
 // Sensor pins
 #define _SPIN1 39
