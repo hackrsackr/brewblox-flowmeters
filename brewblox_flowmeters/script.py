@@ -1,6 +1,7 @@
 import subprocess
 
-pio_run = subprocess.run('pio run -t upload', shell=True)
+run_command = 'pio run -t upload'
+pio_run = subprocess.run(run_command, shell=True)
 
 if __name__ == '__main__':
     pio_run
