@@ -1,14 +1,13 @@
 #include "ArduinoJson.h"
 #include "EspMQTTClient.h"
-//#include "ESP32HTTPUpdateServer.h"
 
 #include "FlowMeter/flowmeter.hpp"
 #include "FlowMeter/flow_config.hpp"
 
 EspMQTTClient client(_SSID, _PASS, _MQTTHOST, _CLIENTID, _MQTTPORT);
 
-FlowMeter f1(_SPIN1, _FLOW1, _YFS402B);
-FlowMeter f2(_SPIN2, _FLOW2, _YFS402B);
+FlowMeter f1(_SPIN1, _FLOW1, _SS_FLOW);
+FlowMeter f2(_SPIN2, _FLOW2, _SS_FLOW);
 
 void pulseCounter1() { f1.pulse_count++; }
 void pulseCounter2() { f2.pulse_count++; }
@@ -31,7 +30,7 @@ void setup()
     {
         delay(500);
         Serial.println("connecting..");
-        failed_connections ++;
+        failed_connections++;
         if (failed_connections > 20)
         {
             Serial.println("restarting..");
@@ -44,11 +43,10 @@ void setup()
 
     pinMode(f1.sensor_pin, INPUT_PULLUP);
     attachInterrupt(f1.sensor_pin, pulseCounter1, FALLING);
-    
+
     pinMode(f2.sensor_pin, INPUT_PULLUP);
     attachInterrupt(f2.sensor_pin, pulseCounter2, FALLING);
 }
-
 
 void publish_data()
 {
@@ -56,7 +54,7 @@ void publish_data()
     {
         StaticJsonDocument<200> message;
         message["key"] = _CLIENTID;
-        
+
         f1.flowmeter_run();
         message["data"][f1.name]["Flow_rate[LPM]"] = f1.flow_rate;
         message["data"][f1.name]["Total[mLs]"] = f1.total_mLs;
